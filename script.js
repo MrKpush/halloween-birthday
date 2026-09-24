@@ -228,7 +228,7 @@ function cleanupScreamer() {
   screamerRunning = false;
 }
 
-async function runScreamer() {
+function runScreamer() {
   if (screamerRunning) return;
   screamerRunning = true;
 
@@ -238,35 +238,51 @@ async function runScreamer() {
   screamerOverlay.classList.add("active", "stage-glitch");
   screamerOverlay.setAttribute("aria-hidden", "false");
 
-  // Le clic de l'utilisateur autorise la lecture audio dans les navigateurs.
-  if (screamerAudio) {
-    screamerAudio.currentTime = 0;
-    screamerAudio.volume = 0.72;
-    try {
-      await screamerAudio.play();
-    } catch (err) {
-      console.warn("Audio screamer bloqué :", err);
-    }
-  }
+  /*
+   * IMPORTANT :
+   * On déclenche les animations AVANT de tenter de lire l'audio.
+   * Certains navigateurs peuvent laisser play() en attente pendant le
+   * chargement du MP3. L'ancienne version attendait ce play(), ce qui
+   * pouvait bloquer l'apparition du visage indéfiniment.
+   */
 
-  // Petit bug + tension.
-  setTimeout(() => {
+  // Petit bug, puis apparition du visage quoi qu'il arrive.
+  window.setTimeout(() => {
     document.body.classList.remove("screamer-glitch");
     document.body.classList.add("screamer-shake");
     screamerOverlay.classList.add("stage-face");
-  }, 520);
+  }, 480);
 
   // Disparition automatique.
-  setTimeout(() => {
-    screamerOverlay.style.transition = "opacity .26s ease";
+  window.setTimeout(() => {
+    screamerOverlay.style.transition = "opacity .28s ease";
     screamerOverlay.style.opacity = "0";
-  }, 3050);
+  }, 3250);
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     screamerOverlay.style.transition = "";
     screamerOverlay.style.opacity = "";
     cleanupScreamer();
-  }, 3380);
+  }, 3580);
+
+  // Audio lancé en parallèle, sans jamais bloquer le visuel.
+  if (screamerAudio) {
+    try {
+      screamerAudio.pause();
+      screamerAudio.currentTime = 0;
+      screamerAudio.volume = 0.72;
+
+      const playPromise = screamerAudio.play();
+
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch((err) => {
+          console.warn("Audio screamer bloqué ou en attente :", err);
+        });
+      }
+    } catch (err) {
+      console.warn("Audio screamer indisponible :", err);
+    }
+  }
 }
 
 if (screamerTrigger && screamerOverlay) {
@@ -279,3 +295,6 @@ document.addEventListener("keydown", (event) => {
     cleanupScreamer();
   }
 });
+
+// Filet de sécurité : si le navigateur désactive certaines animations,
+// la classe stage-face suffit toujours à rendre le visage visible.
