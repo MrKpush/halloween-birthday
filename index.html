@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#100018" />
+  <title>Halloween Birthday Party 🎃</title>
+  <meta name="description" content="Invitation Halloween Birthday Party" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="fog fog-1"></div>
+  <div class="fog fog-2"></div>
+
+  <div class="bats" aria-hidden="true">
+    <span>🦇</span><span>🦇</span><span>🦇</span>
+  </div>
+
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">TU ES INVITÉ(E) À UNE SOIRÉE PAS COMME LES AUTRES…</p>
+      <h1>Halloween<br><span>Birthday Party</span></h1>
+      <p class="subtitle">🎃 Anniversaire • Halloween • Frissons • Musique 🎃</p>
+
+      <div class="pumpkin" aria-hidden="true">🎃</div>
+
+      <p class="dare">ENTRE… SI TU OSES 👻</p>
+
+      <div id="countdown" class="countdown" aria-label="Compte à rebours">
+        <div><strong id="days">00</strong><span>jours</span></div>
+        <div><strong id="hours">00</strong><span>heures</span></div>
+        <div><strong id="minutes">00</strong><span>minutes</span></div>
+        <div><strong id="seconds">00</strong><span>secondes</span></div>
+      </div>
+    </section>
+
+    <section class="card info-card">
+      <h2>🕷️ La soirée</h2>
+
+      <div class="infos">
+        <div class="info">
+          <span class="icon">📅</span>
+          <div>
+            <small>DATE</small>
+            <strong>Samedi 31 octobre 2026</strong>
+          </div>
+        </div>
+
+        <div class="info">
+          <span class="icon">🕗</span>
+          <div>
+            <small>HEURE</small>
+            <strong>À partir de 20h00</strong>
+          </div>
+        </div>
+
+        <div class="info">
+          <span class="icon">📍</span>
+          <div>
+            <small>LIEU</small>
+            <strong>Adresse communiquée aux invités</strong>
+          </div>
+        </div>
+
+        <div class="info">
+          <span class="icon">🧛</span>
+          <div>
+            <small>DRESS CODE</small>
+            <strong>Déguisement fortement conseillé</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card program">
+      <h2>☠️ Au programme</h2>
+      <div class="chips">
+        <span>🎵 Musique</span>
+        <span>🍕 À manger</span>
+        <span>🍬 Bonbons</span>
+        <span>🎃 Halloween</span>
+        <span>👻 Frissons</span>
+        <span>🥳 Anniversaire</span>
+      </div>
+    </section>
+
+    <section class="card rsvp">
+      <p class="mini-title">TON INVITATION</p>
+      <h2>Seras-tu parmi nous ?</h2>
+      <p class="rsvp-intro">Réponds avant que les fantômes ne viennent te chercher… 👀</p>
+
+      <form id="rsvpForm">
+        <label>
+          Ton prénom
+          <input id="name" name="name" type="text" placeholder="Ex : Camille" required />
+        </label>
+
+        <fieldset>
+          <legend>Tu viens ?</legend>
+
+          <label class="choice">
+            <input type="radio" name="attendance" value="Oui" required />
+            <span>🎃 Évidemment, je viens !</span>
+          </label>
+
+          <label class="choice">
+            <input type="radio" name="attendance" value="Non" required />
+            <span>👻 Malheureusement, je ne peux pas</span>
+          </label>
+        </fieldset>
+
+        <label>
+          Ton déguisement (facultatif)
+          <input id="costume" name="costume" type="text" placeholder="Zombie, vampire, surprise…" />
+        </label>
+
+        <label>
+          Un petit message ? (facultatif)
+          <textarea id="message" name="message" rows="3" placeholder="Promis, je ramène les bonbons 😈"></textarea>
+        </label>
+
+        <button type="submit">🎃 JE CONFIRME MA RÉPONSE 🎃</button>
+        <p id="formStatus" class="form-status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <footer>
+      <p>🦇 Prépare ton costume… la nuit risque d’être longue. 🦇</p>
+      <small>Halloween Birthday Party • 2026</small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
