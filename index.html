@@ -43,6 +43,16 @@
         <source src="halloween-ambience.mp3" type="audio/mpeg">
       </audio>
 
+      <div class="forbidden-action">
+        <button type="button" id="screamerTrigger" class="forbidden-button">
+          <span class="forbidden-icon">⚠</span>
+          <span>
+            <strong>CLIQUE SURTOUT PAS ICI</strong>
+            <small>Non vraiment. C’est écrit assez gros normalement.</small>
+          </span>
+        </button>
+      </div>
+
       <div class="countdown-wrap">
         <p class="mini-title">Compte à rebours avant l’invasion</p>
         <div id="countdown" class="countdown" aria-label="Compte à rebours">
@@ -72,8 +82,8 @@
 
         <article class="info-box">
           <span class="info-icon">🏚️</span>
-          <small>Lieu du Crime</small>
-          <strong>L'adresse te sera Partagé<br>Directement par Méline</strong>
+          <small>Lieu</small>
+          <strong>2 chemin de Fontenelle<br>60110 Amblainville</strong>
         </article>
 
         <article class="info-box">
@@ -282,6 +292,77 @@
       <small>Viens déguisé(e), souris pour les photos, respecte les lieux… et tout se passera terriblement bien.</small>
     </footer>
   </main>
+
+  <div id="screamerOverlay" class="screamer-overlay" aria-hidden="true">
+    <div class="screamer-static"></div>
+    <div class="screamer-flash"></div>
+
+    <div class="screamer-face-wrap" aria-hidden="true">
+      <svg class="screamer-face" viewBox="0 0 600 760" role="img" aria-label="Visage fantomatique effrayant">
+        <defs>
+          <radialGradient id="skinGrad" cx="50%" cy="37%" r="60%">
+            <stop offset="0%" stop-color="#f1eee8"/>
+            <stop offset="58%" stop-color="#b9b2ad"/>
+            <stop offset="100%" stop-color="#575257"/>
+          </radialGradient>
+          <radialGradient id="eyeGrad" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#4a000d"/>
+            <stop offset="35%" stop-color="#160006"/>
+            <stop offset="100%" stop-color="#000000"/>
+          </radialGradient>
+          <filter id="roughShadow">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015 0.05" numOctaves="3" seed="13" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="9"/>
+          </filter>
+        </defs>
+
+        <ellipse cx="300" cy="365" rx="218" ry="292" fill="#09070a" opacity=".78"/>
+        <path
+          d="M300 62
+             C165 62 96 173 103 332
+             C108 475 156 647 300 706
+             C444 647 492 475 497 332
+             C504 173 435 62 300 62Z"
+          fill="url(#skinGrad)"
+          filter="url(#roughShadow)"
+        />
+
+        <path d="M155 293 C205 248 252 252 276 312 C238 341 192 344 150 319Z"
+              fill="url(#eyeGrad)"/>
+        <path d="M445 293 C395 248 348 252 324 312 C362 341 408 344 450 319Z"
+              fill="url(#eyeGrad)"/>
+
+        <circle cx="223" cy="305" r="8" fill="#ff3148" opacity=".8"/>
+        <circle cx="377" cy="305" r="8" fill="#ff3148" opacity=".8"/>
+
+        <path d="M300 322 C278 392 273 427 300 443 C327 427 322 392 300 322Z"
+              fill="#5e5859" opacity=".72"/>
+
+        <path d="M192 494
+                 C230 458 370 458 408 494
+                 C383 612 333 652 300 656
+                 C267 652 217 612 192 494Z"
+              fill="#0a0305"/>
+
+        <path d="M216 504 C255 492 345 492 384 504"
+              stroke="#d8d3cf" stroke-width="7" opacity=".56"/>
+        <path d="M215 537 C260 553 340 553 385 537"
+              stroke="#45383a" stroke-width="8" opacity=".55"/>
+
+        <path d="M123 208 C175 150 236 123 300 122"
+              stroke="#1a1519" stroke-width="24" opacity=".8"/>
+        <path d="M477 208 C425 150 364 123 300 122"
+              stroke="#1a1519" stroke-width="24" opacity=".8"/>
+      </svg>
+      <div class="screamer-caption">TROP TARD.</div>
+    </div>
+
+    <div class="screamer-vignette"></div>
+  </div>
+
+  <audio id="screamerAudio" preload="auto">
+    <source src="screamer-stinger.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
   <script src="https://script.google.com/macros/s/AKfycbxOnIISLWovgibKJQu_s9knGCBlnbYwBCMqVKmLod019vXMoeVYa_X0dd8H_Iro_1Pu/exec?action=stats&callback=receiveRsvpStats" onerror="counterLoadFailed()"></script>

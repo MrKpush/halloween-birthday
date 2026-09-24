@@ -201,3 +201,81 @@ if (horrorAmbience && soundToggle && soundLabel) {
     }
   });
 }
+
+
+// ==============================================
+// V2.2 — Screamer premium au clic
+// ==============================================
+
+const screamerTrigger = document.getElementById("screamerTrigger");
+const screamerOverlay = document.getElementById("screamerOverlay");
+const screamerAudio = document.getElementById("screamerAudio");
+
+let screamerRunning = false;
+
+function cleanupScreamer() {
+  document.documentElement.classList.remove("screamer-lock");
+  document.body.classList.remove("screamer-lock", "screamer-glitch", "screamer-shake");
+
+  screamerOverlay.classList.remove("active", "stage-glitch", "stage-face");
+  screamerOverlay.setAttribute("aria-hidden", "true");
+
+  if (screamerAudio) {
+    screamerAudio.pause();
+    screamerAudio.currentTime = 0;
+  }
+
+  screamerRunning = false;
+}
+
+async function runScreamer() {
+  if (screamerRunning) return;
+  screamerRunning = true;
+
+  document.documentElement.classList.add("screamer-lock");
+  document.body.classList.add("screamer-lock", "screamer-glitch");
+
+  screamerOverlay.classList.add("active", "stage-glitch");
+  screamerOverlay.setAttribute("aria-hidden", "false");
+
+  // Le clic de l'utilisateur autorise la lecture audio dans les navigateurs.
+  if (screamerAudio) {
+    screamerAudio.currentTime = 0;
+    screamerAudio.volume = 0.72;
+    try {
+      await screamerAudio.play();
+    } catch (err) {
+      console.warn("Audio screamer bloqué :", err);
+    }
+  }
+
+  // Petit bug + tension.
+  setTimeout(() => {
+    document.body.classList.remove("screamer-glitch");
+    document.body.classList.add("screamer-shake");
+    screamerOverlay.classList.add("stage-face");
+  }, 1280);
+
+  // Disparition automatique.
+  setTimeout(() => {
+    screamerOverlay.style.transition = "opacity .26s ease";
+    screamerOverlay.style.opacity = "0";
+  }, 2400);
+
+  setTimeout(() => {
+    screamerOverlay.style.transition = "";
+    screamerOverlay.style.opacity = "";
+    cleanupScreamer();
+  }, 2700);
+}
+
+if (screamerTrigger && screamerOverlay) {
+  screamerTrigger.addEventListener("click", runScreamer);
+}
+
+// Sécurité : Échap ferme immédiatement.
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && screamerRunning) {
+    cleanupScreamer();
+  }
+});
