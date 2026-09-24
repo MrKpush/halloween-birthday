@@ -233,7 +233,7 @@ function runScreamer() {
   screamerRunning = true;
 
   document.documentElement.classList.add("screamer-lock");
-  document.body.classList.add("screamer-lock", "screamer-glitch");
+  document.body.classList.add("screamer-lock");
 
   screamerOverlay.classList.add("active", "stage-glitch");
   screamerOverlay.setAttribute("aria-hidden", "false");
@@ -248,8 +248,6 @@ function runScreamer() {
 
   // Petit bug, puis apparition du visage quoi qu'il arrive.
   window.setTimeout(() => {
-    document.body.classList.remove("screamer-glitch");
-    document.body.classList.add("screamer-shake");
     screamerOverlay.classList.add("stage-face");
   }, 480);
 
