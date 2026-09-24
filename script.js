@@ -254,19 +254,19 @@ async function runScreamer() {
     document.body.classList.remove("screamer-glitch");
     document.body.classList.add("screamer-shake");
     screamerOverlay.classList.add("stage-face");
-  }, 1280);
+  }, 520);
 
   // Disparition automatique.
   setTimeout(() => {
     screamerOverlay.style.transition = "opacity .26s ease";
     screamerOverlay.style.opacity = "0";
-  }, 2400);
+  }, 3050);
 
   setTimeout(() => {
     screamerOverlay.style.transition = "";
     screamerOverlay.style.opacity = "";
     cleanupScreamer();
-  }, 2700);
+  }, 3380);
 }
 
 if (screamerTrigger && screamerOverlay) {

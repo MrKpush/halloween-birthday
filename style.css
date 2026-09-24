@@ -1033,3 +1033,232 @@ body.screamer-shake {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* =========================================================
+   V2.2.1 — CORRECTIF VISAGE : beaucoup plus visible
+   ========================================================= */
+
+.screamer-face-wrap {
+  width: min(86vw, 760px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ghost-head {
+  position: relative;
+  width: min(72vw, 500px);
+  aspect-ratio: .78;
+  border-radius: 48% 52% 42% 44% / 38% 38% 58% 60%;
+  background:
+    radial-gradient(circle at 46% 28%, rgba(255,255,255,.98), rgba(228,225,220,.96) 24%, rgba(163,158,159,.98) 70%, rgba(73,66,70,.98) 100%);
+  box-shadow:
+    0 0 45px rgba(255,255,255,.15),
+    0 0 120px rgba(255,20,56,.24),
+    inset 0 -80px 110px rgba(0,0,0,.34);
+  overflow: hidden;
+  transform: rotate(-1deg);
+}
+
+.ghost-head::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(circle at 35% 45%, transparent 0 20%, rgba(0,0,0,.11) 21% 32%, transparent 33%),
+    radial-gradient(circle at 68% 46%, transparent 0 18%, rgba(0,0,0,.10) 19% 31%, transparent 32%),
+    repeating-linear-gradient(100deg, transparent 0 18px, rgba(40,0,7,.07) 19px 20px);
+  mix-blend-mode: multiply;
+  opacity: .75;
+  pointer-events: none;
+}
+
+.ghost-shadow {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0,0,0,.26);
+  filter: blur(18px);
+}
+
+.ghost-shadow-a {
+  width: 34%;
+  height: 16%;
+  left: 10%;
+  top: 28%;
+  transform: rotate(-12deg);
+}
+
+.ghost-shadow-b {
+  width: 34%;
+  height: 16%;
+  right: 10%;
+  top: 28%;
+  transform: rotate(12deg);
+}
+
+.ghost-eye {
+  position: absolute;
+  top: 31%;
+  width: 27%;
+  height: 20%;
+  background:
+    radial-gradient(circle at 50% 50%, #080003 0 22%, #170006 23% 56%, #000 57% 100%);
+  border-radius: 48% 52% 58% 42% / 42% 44% 56% 58%;
+  box-shadow:
+    inset 0 0 28px #000,
+    0 0 18px rgba(70,0,16,.42);
+}
+
+.ghost-eye-left {
+  left: 14%;
+  transform: rotate(-8deg);
+}
+
+.ghost-eye-right {
+  right: 14%;
+  transform: rotate(8deg);
+}
+
+.ghost-pupil {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1;
+  left: 43%;
+  top: 42%;
+  border-radius: 50%;
+  background: #ff2645;
+  box-shadow: 0 0 15px rgba(255,38,69,.95);
+}
+
+.ghost-nose {
+  position: absolute;
+  left: 46%;
+  top: 49%;
+  width: 8%;
+  height: 15%;
+  background: linear-gradient(180deg, rgba(68,61,63,.12), rgba(20,10,14,.54));
+  clip-path: polygon(50% 0, 100% 88%, 50% 100%, 0 88%);
+  filter: blur(.3px);
+}
+
+.ghost-mouth {
+  position: absolute;
+  left: 23%;
+  top: 63%;
+  width: 54%;
+  height: 28%;
+  border-radius: 46% 54% 50% 50% / 32% 34% 66% 68%;
+  background: #050103;
+  box-shadow:
+    inset 0 16px 28px rgba(110,0,22,.42),
+    0 0 26px rgba(0,0,0,.58);
+  overflow: hidden;
+}
+
+.ghost-mouth-inner {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  top: 10%;
+  height: 10%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #ddd5cc 0 7%,
+      #7d7371 7.5% 9%
+    );
+  border-radius: 0 0 35% 35%;
+  opacity: .56;
+}
+
+.ghost-scratch {
+  position: absolute;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(105,0,18,.65), transparent);
+  transform-origin: left center;
+  opacity: .75;
+}
+
+.scratch-a {
+  width: 23%;
+  left: 12%;
+  top: 58%;
+  transform: rotate(17deg);
+}
+
+.scratch-b {
+  width: 18%;
+  left: 15%;
+  top: 61%;
+  transform: rotate(17deg);
+}
+
+.scratch-c {
+  width: 22%;
+  right: 9%;
+  top: 55%;
+  transform: rotate(-20deg);
+}
+
+.screamer-overlay.stage-face .ghost-head {
+  animation:
+    ghostLunge .50s cubic-bezier(.05,.82,.12,1) forwards,
+    ghostJitter .07s steps(2,end) .52s infinite;
+}
+
+.screamer-overlay.stage-face .screamer-face-wrap {
+  opacity: 1;
+  animation: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.screamer-overlay.stage-face .screamer-caption {
+  animation: captionHit .26s ease-out .18s both;
+}
+
+@keyframes ghostLunge {
+  0% {
+    transform: scale(.22) translateY(90px) rotate(-3deg);
+    filter: blur(15px) contrast(1.8);
+    opacity: .1;
+  }
+  65% {
+    transform: scale(1.25) translateY(-5px) rotate(1deg);
+    filter: blur(0) contrast(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.08) translateY(0) rotate(0);
+    filter: blur(0) contrast(1.12);
+    opacity: 1;
+  }
+}
+
+@keyframes ghostJitter {
+  0%   { transform: scale(1.08) translate(0,0) rotate(0); }
+  25%  { transform: scale(1.085) translate(-4px,2px) rotate(-.35deg); }
+  50%  { transform: scale(1.08) translate(3px,-2px) rotate(.28deg); }
+  75%  { transform: scale(1.083) translate(-2px,-1px) rotate(-.22deg); }
+  100% { transform: scale(1.08) translate(0,0) rotate(0); }
+}
+
+@keyframes captionHit {
+  from {
+    opacity: 0;
+    transform: scale(.55);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 620px) {
+  .ghost-head {
+    width: min(88vw, 500px);
+  }
+}
