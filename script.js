@@ -1,5 +1,14 @@
+// ==============================================
+// Halloween Birthday Party 🎃
+// Compte à rebours + envoi des RSVP vers Apps Script
+// ==============================================
+
 // Date de la soirée : 31 octobre 2026 à 20h00, heure de Paris.
 const partyDate = new Date("2026-10-31T20:00:00+01:00");
+
+// URL publique de l'application Web Google Apps Script
+const RSVP_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbxOnIISLWovgibKJQu_s9knGCBlnbYwBCMqVKmLod019vXMoeVYa_X0dd8H_Iro_1Pu/exec";
 
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
@@ -30,15 +39,77 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Étape suivante : nous remplacerons ceci par l'envoi vers Google Sheets.
+
+// ==============================================
+// Formulaire RSVP
+// ==============================================
+
 const form = document.getElementById("rsvpForm");
 const formStatus = document.getElementById("formStatus");
+const submitButton = form.querySelector('button[type="submit"]');
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
+  const formData = new FormData(form);
+  const name = String(formData.get("name") || "").trim();
+  const attendance = String(formData.get("attendance") || "").trim();
+  const costume = String(formData.get("costume") || "").trim();
+  const message = String(formData.get("message") || "").trim();
 
-  formStatus.textContent =
-    `🎃 Merci ${name || ""} ! Le formulaire sera relié à Google Sheets à l'étape suivante.`;
+  if (!name) {
+    formStatus.textContent = "👻 Indique ton prénom avant de confirmer.";
+    return;
+  }
+
+  if (!attendance) {
+    formStatus.textContent = "🎃 Dis-nous si tu viens ou non.";
+    return;
+  }
+
+  submitButton.disabled = true;
+  submitButton.textContent = "🦇 ENVOI EN COURS…";
+  formStatus.textContent = "Transmission de ta réponse aux esprits… 👻";
+
+  const body = new URLSearchParams();
+  body.append("name", name);
+  body.append("attendance", attendance);
+  body.append("costume", costume);
+  body.append("message", message);
+
+  try {
+    /*
+      Apps Script redirige parfois la requête vers un domaine Google différent.
+      "no-cors" évite que le navigateur bloque cette redirection depuis GitHub Pages.
+      La réponse devient volontairement opaque, mais l'envoi POST est bien effectué.
+    */
+    await fetch(RSVP_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
+      body: body.toString()
+    });
+
+    formStatus.textContent =
+      `🎃 Merci ${name} ! Ta réponse a bien été envoyée.`;
+    form.reset();
+
+    submitButton.textContent = "✅ RÉPONSE ENVOYÉE";
+
+    setTimeout(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = "🎃 JE CONFIRME MA RÉPONSE 🎃";
+    }, 3500);
+
+  } catch (error) {
+    console.error("Erreur RSVP :", error);
+
+    formStatus.textContent =
+      "😈 Oups… impossible d'envoyer la réponse. Réessaie dans quelques secondes.";
+
+    submitButton.disabled = false;
+    submitButton.textContent = "🎃 JE RÉESSAIE 🎃";
+  }
 });
