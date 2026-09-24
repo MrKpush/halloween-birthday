@@ -1262,3 +1262,98 @@ body.screamer-shake {
     width: min(88vw, 500px);
   }
 }
+
+
+/* =========================================================
+   V2.2.2 — CORRECTIF IMAGE EXPLICITE
+   ========================================================= */
+
+.screamer-face-wrap {
+  z-index: 3;
+  width: min(92vw, 820px) !important;
+  opacity: 0;
+  transform: scale(.25) translateY(80px);
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  filter: none !important;
+}
+
+.screamer-face-image {
+  display: block !important;
+  width: min(72vw, 560px);
+  max-width: 560px;
+  height: auto;
+  opacity: 1 !important;
+  filter:
+    contrast(1.18)
+    brightness(1.04)
+    drop-shadow(0 0 18px rgba(255,255,255,.12))
+    drop-shadow(0 0 50px rgba(255,0,40,.25));
+}
+
+.screamer-overlay.stage-face .screamer-face-wrap {
+  opacity: 1 !important;
+  animation: faceRevealHard .62s cubic-bezier(.04,.82,.1,1) forwards;
+}
+
+.screamer-overlay.stage-face .screamer-face-image {
+  animation: faceJitterHard .075s steps(2,end) .58s infinite;
+}
+
+.screamer-caption {
+  margin-top: -18px;
+  opacity: 0;
+}
+
+.screamer-overlay.stage-face .screamer-caption {
+  opacity: 1;
+  animation: captionPunch .26s ease-out .18s both;
+}
+
+@keyframes faceRevealHard {
+  0% {
+    transform: scale(.25) translateY(120px);
+    opacity: 0;
+    filter: blur(16px);
+  }
+  55% {
+    transform: scale(1.28) translateY(-4px);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: scale(1.02) translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes faceJitterHard {
+  0%   { transform: translate(0,0) rotate(0); }
+  20%  { transform: translate(-5px,2px) rotate(-.35deg); }
+  40%  { transform: translate(5px,-2px) rotate(.35deg); }
+  60%  { transform: translate(-3px,-1px) rotate(-.2deg); }
+  80%  { transform: translate(3px,2px) rotate(.2deg); }
+  100% { transform: translate(0,0) rotate(0); }
+}
+
+@keyframes captionPunch {
+  from {
+    transform: scale(.55);
+    filter: blur(5px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 620px) {
+  .screamer-face-image {
+    width: min(88vw, 560px);
+  }
+}
