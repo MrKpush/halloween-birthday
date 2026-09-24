@@ -34,7 +34,7 @@ Compatible mobile, tablette et ordinateur
 
 Date : 31 octobre 2026
 Heure : 20h30
-Lieu : 2 chemin de Fontenelle, 60110 Amblainville
+Lieu : *************************************************
 Événement : Sweet 16 de Méline / Halloween House Party
 
 🌐 Site en ligne
