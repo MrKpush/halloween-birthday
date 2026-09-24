@@ -1,12 +1,8 @@
 // ==============================================
-// Halloween Birthday Party 🎃
-// Compte à rebours + RSVP Google Sheets + compteur live
+// Sweet 16 de Méline - Halloween House Party
 // ==============================================
 
-// Date de la soirée : 31 octobre 2026 à 20h00, heure de Paris.
-const partyDate = new Date("2026-10-31T20:00:00+01:00");
-
-// URL publique Google Apps Script
+const partyDate = new Date("2026-10-31T20:30:00+01:00");
 const RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbxOnIISLWovgibKJQu_s9knGCBlnbYwBCMqVKmLod019vXMoeVYa_X0dd8H_Iro_1Pu/exec";
 
 const daysEl = document.getElementById("days");
@@ -20,7 +16,7 @@ function updateCountdown() {
 
   if (diff <= 0) {
     document.getElementById("countdown").innerHTML =
-      "<div style='grid-column:1/-1'><strong>🎃 C'EST CE SOIR ! 🎃</strong><span>Prépare ton costume</span></div>";
+      "<div style='grid-column:1/-1'><strong>🩸 C'EST CE SOIR 🩸</strong><span>Prépare ton déguisement et ta meilleure mauvaise idée</span></div>";
     return;
   }
 
@@ -38,11 +34,9 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-
 // ==============================================
 // Compteur des réponses
-// Le chargement initial est fait par une balise <script> JSONP statique
-// placée dans index.html après ce fichier.
+// Chargé par JSONP depuis index.html
 // ==============================================
 
 let currentStats = { yes: 0, no: 0, total: 0 };
@@ -61,53 +55,44 @@ window.receiveRsvpStats = function(stats) {
 window.counterLoadFailed = function() {
   const totalReplies = document.getElementById("totalReplies");
   if (totalReplies) {
-    totalReplies.textContent =
-      "👻 Impossible de charger le compteur pour le moment.";
+    totalReplies.textContent = "💀 Impossible de charger le compteur pour le moment.";
   }
 };
 
 function renderRsvpStats() {
-  const yes = currentStats.yes;
-  const no = currentStats.no;
-  const total = currentStats.total;
-
   const yesCount = document.getElementById("yesCount");
   const noCount = document.getElementById("noCount");
   const yesLabel = document.getElementById("yesLabel");
   const noLabel = document.getElementById("noLabel");
   const totalReplies = document.getElementById("totalReplies");
 
-  if (yesCount) yesCount.textContent = yes;
-  if (noCount) noCount.textContent = no;
+  if (yesCount) yesCount.textContent = currentStats.yes;
+  if (noCount) noCount.textContent = currentStats.no;
 
   if (yesLabel) {
-    yesLabel.textContent = yes === 1
+    yesLabel.textContent = currentStats.yes === 1
       ? "invité confirmé"
       : "invités confirmés";
   }
 
   if (noLabel) {
-    noLabel.textContent = no === 1
+    noLabel.textContent = currentStats.no === 1
       ? "ne pourra pas venir"
       : "ne pourront pas venir";
   }
 
   if (totalReplies) {
-    if (total === 0) {
-      totalReplies.textContent =
-        "Aucune réponse pour le moment… sois le premier 👻";
-    } else if (total === 1) {
+    if (currentStats.total === 0) {
+      totalReplies.textContent = "Aucune réponse pour le moment… sois le premier à survivre.";
+    } else if (currentStats.total === 1) {
       totalReplies.textContent = "1 réponse reçue pour le moment.";
     } else {
-      totalReplies.textContent =
-        `${total} réponses reçues pour le moment.`;
+      totalReplies.textContent = `${currentStats.total} réponses reçues pour le moment.`;
     }
   }
 }
 
 function addLocalResponseToCounter(attendance) {
-  // Après une réponse envoyée, on met le compteur à jour immédiatement
-  // dans la page. Au prochain chargement, Apps Script renverra le vrai total.
   if (!statsLoaded) return;
 
   if (attendance === "Oui") currentStats.yes += 1;
@@ -116,7 +101,6 @@ function addLocalResponseToCounter(attendance) {
 
   renderRsvpStats();
 }
-
 
 // ==============================================
 // Formulaire RSVP
@@ -136,18 +120,18 @@ form.addEventListener("submit", async (event) => {
   const message = String(formData.get("message") || "").trim();
 
   if (!name) {
-    formStatus.textContent = "👻 Indique ton prénom avant de confirmer.";
+    formStatus.textContent = "💀 Mets ton prénom avant de disparaître.";
     return;
   }
 
   if (!attendance) {
-    formStatus.textContent = "🎃 Dis-nous si tu viens ou non.";
+    formStatus.textContent = "🩸 Dis-nous si tu viens ou non.";
     return;
   }
 
   submitButton.disabled = true;
-  submitButton.textContent = "🦇 ENVOI EN COURS…";
-  formStatus.textContent = "Transmission de ta réponse aux esprits… 👻";
+  submitButton.textContent = "🩸 ENVOI EN COURS…";
+  formStatus.textContent = "Transmission aux ténèbres en cours…";
 
   const body = new URLSearchParams();
   body.append("name", name);
@@ -165,27 +149,21 @@ form.addEventListener("submit", async (event) => {
       body: body.toString()
     });
 
-    formStatus.textContent =
-      `🎃 Merci ${name} ! Ta réponse a bien été envoyée.`;
+    formStatus.textContent = `🩸 Merci ${name} ! Ta réponse a bien été enregistrée.`;
     form.reset();
+    addLocalResponseToCounter(attendance);
 
     submitButton.textContent = "✅ RÉPONSE ENVOYÉE";
 
-    // Laisse le temps à Google Sheets d'enregistrer, puis rafraîchit le compteur.
-    addLocalResponseToCounter(attendance);
-
     setTimeout(() => {
       submitButton.disabled = false;
-      submitButton.textContent = "🎃 JE CONFIRME MA RÉPONSE 🎃";
+      submitButton.textContent = "🩸 JE CONFIRME MA PRÉSENCE 🩸";
     }, 3500);
 
   } catch (error) {
     console.error("Erreur RSVP :", error);
-
-    formStatus.textContent =
-      "😈 Oups… impossible d'envoyer la réponse. Réessaie dans quelques secondes.";
-
+    formStatus.textContent = "💀 Oups… impossible d'envoyer la réponse. Réessaie dans quelques secondes.";
     submitButton.disabled = false;
-    submitButton.textContent = "🎃 JE RÉESSAIE 🎃";
+    submitButton.textContent = "🩸 JE RÉESSAIE 🩸";
   }
 });
