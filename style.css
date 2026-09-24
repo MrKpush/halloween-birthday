@@ -398,3 +398,95 @@ footer small {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* ===== Compteur RSVP en direct ===== */
+.guest-counter {
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.guest-counter::before {
+  content: "";
+  position: absolute;
+  inset: -40% auto auto 50%;
+  width: 420px;
+  height: 220px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(255, 122, 0, .08);
+  filter: blur(45px);
+  pointer-events: none;
+}
+
+.counter-intro {
+  margin: -10px 0 24px;
+  color: var(--muted);
+  position: relative;
+}
+
+.counter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  position: relative;
+}
+
+.counter-box {
+  min-height: 155px;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+.counter-yes {
+  border-color: rgba(255, 122, 0, .26);
+}
+
+.counter-no {
+  border-color: rgba(139, 44, 255, .26);
+}
+
+.counter-emoji {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.counter-box strong {
+  display: block;
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  line-height: 1;
+  color: var(--orange);
+  text-shadow: 0 0 22px rgba(255,122,0,.20);
+}
+
+.counter-no strong {
+  color: #b56cff;
+  text-shadow: 0 0 22px rgba(139,44,255,.24);
+}
+
+.counter-box span:last-child {
+  margin-top: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: .82rem;
+}
+
+.counter-total {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .counter-grid {
+    grid-template-columns: 1fr;
+  }
+}
