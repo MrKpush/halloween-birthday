@@ -94,14 +94,21 @@
       <h2>🎃 Les réponses</h2>
       <p class="counter-intro">Les esprits comptent les invités en temps réel…</p>
 
-      <iframe
-        id="rsvpCounterFrame"
-        class="counter-frame"
-        src="https://script.google.com/macros/s/AKfycbxOnIISLWovgibKJQu_s9knGCBlnbYwBCMqVKmLod019vXMoeVYa_X0dd8H_Iro_1Pu/exec?action=counter"
-        title="Compteur des réponses"
-        loading="eager"
-        referrerpolicy="no-referrer">
-      </iframe>
+      <div class="counter-grid">
+        <div class="counter-box counter-yes">
+          <span class="counter-emoji">🎃</span>
+          <strong id="yesCount">–</strong>
+          <span id="yesLabel">invités confirmés</span>
+        </div>
+
+        <div class="counter-box counter-no">
+          <span class="counter-emoji">👻</span>
+          <strong id="noCount">–</strong>
+          <span id="noLabel">ne pourront pas venir</span>
+        </div>
+      </div>
+
+      <p class="counter-total" id="totalReplies">Chargement des réponses…</p>
     </section>
 
     <section class="card rsvp">
@@ -151,5 +158,10 @@
   </main>
 
   <script src="script.js"></script>
+  <!-- Chargement JSONP statique : méthode officiellement prévue par Apps Script -->
+  <script
+    src="https://script.google.com/macros/s/AKfycbxOnIISLWovgibKJQu_s9knGCBlnbYwBCMqVKmLod019vXMoeVYa_X0dd8H_Iro_1Pu/exec?action=stats&callback=receiveRsvpStats"
+    onerror="counterLoadFailed()">
+  </script>
 </body>
 </html>
