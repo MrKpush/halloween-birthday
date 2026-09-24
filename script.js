@@ -40,64 +40,20 @@ setInterval(updateCountdown, 1000);
 
 
 // ==============================================
-// Compteur des réponses (JSONP = compatible GitHub Pages)
+// Compteur des réponses
+// Le compteur est rendu par Apps Script dans une iframe.
+// Cela évite les blocages de chargement cross-domain/JSONP.
 // ==============================================
 
-window.receiveRsvpStats = function(stats) {
-  const yes = Number(stats.yes || 0);
-  const no = Number(stats.no || 0);
-  const total = Number(stats.total || (yes + no));
+function refreshRsvpCounter() {
+  const frame = document.getElementById("rsvpCounterFrame");
+  if (!frame) return;
 
-  const yesCount = document.getElementById("yesCount");
-  const noCount = document.getElementById("noCount");
-  const yesLabel = document.getElementById("yesLabel");
-  const noLabel = document.getElementById("noLabel");
-  const totalReplies = document.getElementById("totalReplies");
-
-  if (yesCount) yesCount.textContent = yes;
-  if (noCount) noCount.textContent = no;
-
-  if (yesLabel) {
-    yesLabel.textContent = yes === 1 ? "invité confirmé" : "invités confirmés";
-  }
-
-  if (noLabel) {
-    noLabel.textContent = no === 1
-      ? "ne pourra pas venir"
-      : "ne pourront pas venir";
-  }
-
-  if (totalReplies) {
-    if (total === 0) {
-      totalReplies.textContent = "Aucune réponse pour le moment… sois le premier 👻";
-    } else if (total === 1) {
-      totalReplies.textContent = "1 réponse reçue pour le moment.";
-    } else {
-      totalReplies.textContent = `${total} réponses reçues pour le moment.`;
-    }
-  }
-};
-
-function loadRsvpStats() {
-  const oldScript = document.getElementById("rsvp-stats-loader");
-  if (oldScript) oldScript.remove();
-
-  const statsScript = document.createElement("script");
-  statsScript.id = "rsvp-stats-loader";
-  statsScript.src =
-    `${RSVP_ENDPOINT}?action=stats&callback=receiveRsvpStats&_=${Date.now()}`;
-
-  statsScript.onerror = () => {
-    const totalReplies = document.getElementById("totalReplies");
-    if (totalReplies) {
-      totalReplies.textContent = "👻 Impossible de charger le compteur pour le moment.";
-    }
-  };
-
-  document.body.appendChild(statsScript);
+  frame.src =
+    `${RSVP_ENDPOINT}?action=counter&_=${Date.now()}`;
 }
 
-loadRsvpStats();
+refreshRsvpCounter();
 
 
 // ==============================================
@@ -154,7 +110,7 @@ form.addEventListener("submit", async (event) => {
     submitButton.textContent = "✅ RÉPONSE ENVOYÉE";
 
     // Laisse le temps à Google Sheets d'enregistrer, puis rafraîchit le compteur.
-    setTimeout(loadRsvpStats, 1200);
+    setTimeout(refreshRsvpCounter, 1400);
 
     setTimeout(() => {
       submitButton.disabled = false;
