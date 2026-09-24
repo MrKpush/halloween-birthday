@@ -1357,3 +1357,30 @@ body.screamer-shake {
     width: min(88vw, 560px);
   }
 }
+
+
+/* =========================================================
+   V2.2.3 — IMAGE RÉALISTE DU SCREAMER
+   ========================================================= */
+
+.screamer-face-wrap {
+  width: min(94vw, 900px) !important;
+}
+
+.screamer-face-image {
+  width: min(76vw, 620px);
+  max-width: 620px;
+  border-radius: 18px;
+  filter:
+    contrast(1.12)
+    brightness(.96)
+    saturate(.88)
+    drop-shadow(0 0 24px rgba(255,255,255,.10))
+    drop-shadow(0 0 60px rgba(255,0,42,.28));
+}
+
+@media (max-width: 620px) {
+  .screamer-face-image {
+    width: min(92vw, 620px);
+  }
+}
