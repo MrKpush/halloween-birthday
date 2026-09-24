@@ -18,13 +18,30 @@
 
   <main class="page">
     <section class="hero card">
+      <div class="case-label">DOSSIER #16 • ACCÈS AUTORISÉ AUX INVITÉS</div>
       <p class="eyebrow">HALLOWEEN HOUSE PARTY • SWEET 16</p>
       <h1>Méline <span>16 ans</span></h1>
-      <p class="hero-tag">Une soirée un peu sanglante, très drôle, légèrement chaotique… mais classe.</p>
-      <p class="hero-intro">
-        Le <strong>31 octobre 2026</strong>, à <strong>20h30</strong>, la maison ouvre ses portes.
-        Entre comme un humain normal, repars avec des photos douteuses, du sucre dans le sang et de bons souvenirs.
+      <p class="hero-tag">Le 31 octobre, personne ne rentre “juste pour dire bonjour”.</p>
+      <p class="hero-intro hero-intro-strong">
+        À <strong>20h30</strong>, la porte s’ouvre. Après ça : musique, faux sang, looks inquiétants,
+        photos potentiellement compromettantes et décisions vestimentaires impossibles à expliquer le lendemain.
       </p>
+      <p class="hero-warning">
+        <span>⚠</span>
+        Tu as reçu ce lien parce que tu es invité(e). Si tu lis encore, il est probablement déjà trop tard.
+      </p>
+
+      <div class="sound-console">
+        <button type="button" id="soundToggle" class="sound-toggle" aria-pressed="false">
+          <span class="sound-led"></span>
+          <span id="soundLabel">ACTIVER L’AMBIANCE SONORE</span>
+        </button>
+        <span class="sound-note">Volume conseillé : “film d’horreur”, pas “descente de police”.</span>
+      </div>
+
+      <audio id="horrorAmbience" loop preload="auto">
+        <source src="halloween-ambience.mp3" type="audio/mpeg">
+      </audio>
 
       <div class="countdown-wrap">
         <p class="mini-title">Compte à rebours avant l’invasion</p>
@@ -85,6 +102,52 @@
       <p class="program-line">
         En résumé : une soirée pour rire, faire peur pour la forme, manger trop et raconter n’importe quoi jusqu’à oublier qui a eu l’idée de mettre autant de faux sang.
       </p>
+    </section>
+
+    <section class="card hazards">
+      <p class="section-kicker">CONTENU POTENTIELLEMENT TROUBLANT</p>
+      <h2>Ce que tu risques de trouver sur place</h2>
+      <p class="hazards-intro">
+        Aucune garantie contractuelle. Mais statistiquement, il y a de fortes chances que tu croises au moins trois des phénomènes suivants :
+      </p>
+
+      <div class="hazard-grid">
+        <article class="hazard-card">
+          <span>🩸</span>
+          <h3>Du faux sang partout</h3>
+          <p>Normalement faux. On préfère préciser, ça évite les appels inutiles au SAMU.</p>
+        </article>
+
+        <article class="hazard-card">
+          <span>📸</span>
+          <h3>Des photos regrettables</h3>
+          <p>Celles qui semblent hilarantes à 22h43 et beaucoup moins le lendemain à 11h12.</p>
+        </article>
+
+        <article class="hazard-card">
+          <span>🍕</span>
+          <h3>De la nourriture</h3>
+          <p>Parce qu’un démon affamé devient vite désagréable. Et parce que personne ne survit à une soirée avec trois bonbons.</p>
+        </article>
+
+        <article class="hazard-card">
+          <span>🔊</span>
+          <h3>Du son</h3>
+          <p>Assez pour danser. Pas assez pour réveiller toute l’Oise. Enfin… c’est l’objectif.</p>
+        </article>
+
+        <article class="hazard-card">
+          <span>🧟</span>
+          <h3>Des créatures étranges</h3>
+          <p>Vampires, zombies, clowns, démons… et peut-être quelqu’un qui dira “j’ai pas eu le temps de me déguiser”.</p>
+        </article>
+
+        <article class="hazard-card">
+          <span>🕵️</span>
+          <h3>Un adulte quelque part</h3>
+          <p>Discret, civilisé, mais parfaitement au courant de ce qui se passe. Oui, dommage.</p>
+        </article>
+      </div>
     </section>
 
     <section class="card guest-counter" id="guestCounter" aria-live="polite">
@@ -207,6 +270,12 @@
         <p id="formStatus" class="form-status" aria-live="polite"></p>
       </form>
     </section>
+
+    <div class="parent-mode">
+      <span class="parent-dot"></span>
+      <strong>PARENTS MODE SURVEILLANCE : ON</strong>
+      <span>— présence discrète, radar activé, niveau de confiance : raisonnable 👀</span>
+    </div>
 
     <footer>
       <p>Sweet 16 de Méline • Halloween House Party • 31.10.2026</p>

@@ -167,3 +167,37 @@ form.addEventListener("submit", async (event) => {
     submitButton.textContent = "🩸 JE RÉESSAIE 🩸";
   }
 });
+
+
+// ==============================================
+// Ambiance sonore V2.1
+// Les navigateurs bloquent généralement l'autoplay sonore,
+// donc la lecture démarre au premier clic sur le bouton.
+// ==============================================
+
+const horrorAmbience = document.getElementById("horrorAmbience");
+const soundToggle = document.getElementById("soundToggle");
+const soundLabel = document.getElementById("soundLabel");
+
+if (horrorAmbience && soundToggle && soundLabel) {
+  horrorAmbience.volume = 0.33;
+
+  soundToggle.addEventListener("click", async () => {
+    if (horrorAmbience.paused) {
+      try {
+        await horrorAmbience.play();
+        soundToggle.classList.add("active");
+        soundToggle.setAttribute("aria-pressed", "true");
+        soundLabel.textContent = "COUPER L’AMBIANCE SONORE";
+      } catch (err) {
+        console.error("Lecture audio impossible :", err);
+        soundLabel.textContent = "CLIQUE ENCORE, LE FANTÔME DORT";
+      }
+    } else {
+      horrorAmbience.pause();
+      soundToggle.classList.remove("active");
+      soundToggle.setAttribute("aria-pressed", "false");
+      soundLabel.textContent = "ACTIVER L’AMBIANCE SONORE";
+    }
+  });
+}
