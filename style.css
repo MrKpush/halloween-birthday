@@ -490,3 +490,22 @@ footer small {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ===== Correctif compteur : rendu Apps Script dans une iframe ===== */
+.counter-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 215px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+@media (max-width: 520px) {
+  .counter-frame {
+    height: 365px;
+  }
+}
